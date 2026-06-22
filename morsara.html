@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مورس آرا | MORSARA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #9A7A30;
+    --silver: #A8B4BE;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --white: #F5F2EC;
+    --text: #D4CFC8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 40px 20px;
+    background: radial-gradient(ellipse at top, #1c1708 0%, var(--black) 60%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 60px,
+        rgba(201,168,76,0.03) 60px,
+        rgba(201,168,76,0.03) 61px
+      );
+    pointer-events: none;
+  }
+
+  .logo-container {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .logo-circle {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 30px rgba(201,168,76,0.3), inset 0 0 30px rgba(0,0,0,0.5);
+    background: radial-gradient(circle, #1a1a1a 60%, #0a0a0a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .logo-placeholder {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--silver), var(--gold), var(--silver));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .brand-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    background: linear-gradient(135deg, var(--silver) 0%, var(--gold-light) 50%, var(--silver) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .morse-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.85;
+    margin-bottom: 4px;
+    text-align: center;
+    direction: ltr;
+  }
+
+  .morse-brand-code {
+    font-family: monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+    opacity: 0.6;
+    text-align: center;
+    direction: ltr;
+    margin-bottom: 8px;
+  }
+
+  .page-handle {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--silver);
+    opacity: 0.55;
+    text-align: center;
+    direction: ltr;
+    margin-bottom: 40px;
+  }
+
+  .divider {
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 40px;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--silver);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  /* ── MORSE CONVERTER ── */
+  .section {
+    padding: 80px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .section-line {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 40px;
+    opacity: 0.5;
+  }
+
+  .converter-box {
+    background: linear-gradient(135deg, #141414, #1c1c1c);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px;
+    padding: 36px 30px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+
+  .converter-box label {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 10px;
+    text-align: right;
+  }
+
+  .converter-input {
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 2px;
+    padding: 14px 16px;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    outline: none;
+    transition: border-color 0.3s;
+    text-align: right;
+    direction: rtl;
+    resize: none;
+  }
+
+  .converter-input:focus {
+    border-color: rgba(201,168,76,0.6);
+  }
+
+  .morse-output-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--silver);
+    opacity: 0.5;
+    margin: 24px 0 10px;
+    text-align: right;
+  }
+
+  .morse-output {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(168,180,190,0.15);
+    border-radius: 2px;
+    padding: 18px 16px;
+    font-family: monospace;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-light);
+    direction: ltr;
+    text-align: left;
+    min-height: 64px;
+    word-break: break-all;
+    line-height: 1.8;
+  }
+
+  .morse-note {
+    font-size: 0.78rem;
+    color: var(--silver);
+    opacity: 0.4;
+    margin-top: 10px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    direction: ltr;
+  }
+
+  /* ── ORDER BUTTON ── */
+  .order-btn {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    margin: 50px auto 0;
+    padding: 18px 30px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
+    border: none;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--black);
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.25);
+  }
+
+  .order-btn:hover {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+    box-shadow: 0 6px 32px rgba(201,168,76,0.4);
+    transform: translateY(-1px);
+  }
+
+  /* ── PRICE LIST ── */
+  .price-section {
+    padding: 80px 20px;
+    background: linear-gradient(180deg, var(--black), var(--dark2), var(--black));
+  }
+
+  .price-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .price-header {
+    text-align: center;
+    margin-bottom: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--gold);
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+  }
+
+  .price-header::before, .price-header::after {
+    content: '◆';
+    font-size: 0.5rem;
+    opacity: 0.6;
+  }
+
+  .price-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #141414, #181818);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    transition: border-color 0.3s;
+  }
+
+  .price-card:hover { border-color: rgba(201,168,76,0.35); }
+
+  .price-card.featured {
+    border-color: rgba(201,168,76,0.4);
+    background: linear-gradient(135deg, #1a1609, #1c1a10);
+  }
+
+  .price-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--black);
+    background: var(--gold);
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  .price-range-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 4px 10px;
+    border-radius: 2px;
+    text-align: center;
+    min-width: 48px;
+  }
+
+  .price-right { text-align: right; }
+  .price-left { text-align: left; }
+
+  .price-title {
+    font-size: 1.05rem;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+  }
+
+  .price-morse-dots {
+    font-family: monospace;
+    font-size: 0.7rem;
+    color: var(--gold-dark);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    direction: ltr;
+  }
+
+  .price-amount {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .price-unit {
+    font-size: 0.75rem;
+    color: var(--silver);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+  }
+
+  /* EXTRAS */
+  .extras-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--silver);
+    opacity: 0.5;
+    text-align: left;
+    margin: 30px 0 16px;
+  }
+
+  .extras-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .extra-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #0f0f0f;
+    border: 1px solid rgba(201,168,76,0.08);
+    border-radius: 2px;
+  }
+
+  .extra-icon { font-size: 1.3rem; }
+  .extra-desc { font-size: 0.9rem; color: var(--text); }
+  .extra-price {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+  }
+  .extra-price.free { color: #4caf86; }
+  .extra-price.gold { color: var(--gold); }
+  .extra-price.ship { color: var(--silver); opacity: 0.7; }
+
+  /* ── COLOR OPTIONS ── */
+  .colors-section {
+    padding: 70px 20px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .color-cards {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  .color-card {
+    width: 180px;
+    background: #141414;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 3px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .color-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-2px);
+  }
+
+  .color-swatch {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+
+  .color-swatch.black-swatch { background: radial-gradient(circle at 35% 35%, #3a3a3a, #0a0a0a); border-color: rgba(255,255,255,0.15); }
+  .color-swatch.silver-swatch { background: radial-gradient(circle at 35% 35%, #e8e8e8, #8a8a8a); }
+  .color-swatch.gold-swatch { background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold-dark)); }
+
+  .color-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .color-price {
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  .color-price.inc { color: var(--gold); }
+  .color-price.base { color: #4caf86; }
+
+  /* ── HOW TO ORDER ── */
+  .steps-section {
+    padding: 80px 20px;
+    background: linear-gradient(180deg, var(--black), #111108, var(--black));
+  }
+
+  .steps-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .steps-list {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    position: relative;
+  }
+
+  .step-item:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.25;
+    line-height: 1;
+    min-width: 40px;
+    text-align: left;
+  }
+
+  .step-content { flex: 1; text-align: right; }
+
+  .step-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+
+  .step-desc {
+    font-size: 1rem;
+    color: var(--silver);
+    opacity: 0.75;
+    line-height: 1.7;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section {
+    padding: 80px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1;
+    background: #141414;
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  .gallery-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+
+  .upload-label:hover { background: rgba(201,168,76,0.05); }
+
+  .upload-icon {
+    font-size: 2rem;
+    opacity: 0.3;
+    color: var(--gold);
+  }
+
+  .upload-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+
+  #gallery-upload { display: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 50px 20px 30px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    text-align: center;
+  }
+
+  .footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    background: linear-gradient(135deg, var(--silver), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .footer-handle {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--gold-dark);
+    opacity: 0.6;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    direction: ltr;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--silver);
+    opacity: 0.3;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── STICKY ORDER BTN ── */
+  .sticky-order {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+  }
+
+  .sticky-order a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 14px 28px;
+    border-radius: 40px;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.35);
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .sticky-order a:hover {
+    background: var(--gold-light);
+    box-shadow: 0 6px 32px rgba(201,168,76,0.5);
+    transform: translateY(-1px);
+  }
+
+  .insta-icon { font-size: 1.1rem; }
+
+  @media (max-width: 500px) {
+    .converter-box { padding: 24px 18px; }
+    .price-card { flex-direction: column; gap: 14px; text-align: center; }
+    .price-right, .price-left { text-align: center; }
+    .color-card { width: 140px; }
+    .step-item { flex-direction: column; gap: 8px; }
+    .step-num { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="logo-container">
+    <div class="logo-circle" id="logoCircle">
+      <img src="" alt="MORSARA" id="logoImg" style="display:none"/>
+      <div class="logo-placeholder" id="logoPlaceholder">MA</div>
+    </div>
+  </div>
+
+  <div class="brand-name">MORSARA</div>
+  <div class="morse-subtitle">MORSE CODE BRACELET · HANDMADE</div>
+  <div class="morse-brand-code">-- --- .-. ... .- .-. .-</div>
+  <div class="page-handle">@morsarad.shop</div>
+  <div class="divider"></div>
+  <div class="tagline">هر کلمه‌ای که دوست داری، روی مچت می‌نشیند</div>
+
+  <a href="https://www.instagram.com/direct/t/morsarad.shop" target="_blank" class="order-btn" style="margin-top:0">
+    همین الان سفارش بده ✦
+  </a>
+</section>
+
+<!-- MORSE CONVERTER -->
+<div class="section">
+  <div class="section-title">کد مورس متن خودت را ببین</div>
+  <div class="section-line"></div>
+
+  <div class="converter-box">
+    <label>متن، کلمه یا جمله‌ات را بنویس</label>
+    <textarea class="converter-input" id="textInput" rows="3" placeholder="مثال: I love you / فارسی هم کار می‌کند"></textarea>
+
+    <div class="morse-output-label">کد مورس ← MORSE CODE</div>
+    <div class="morse-output" id="morseOutput">· · · · · · · · · ·</div>
+    <div class="morse-note">/ = فاصله بین کلمات | - = خط | · = نقطه</div>
+  </div>
+</div>
+
+<!-- PRICE LIST -->
+<div class="price-section">
+  <div class="price-inner">
+    <div class="price-header">لیست قیمت</div>
+
+    <div class="price-card">
+      <div class="price-left">
+        <span class="price-amount">۱۰۵,۰۰۰</span>
+        <span class="price-unit">تومان</span>
+      </div>
+      <div class="price-right">
+        <div class="price-title">تا ۳ حرف</div>
+        <div class="price-morse-dots">. _ . / . . . / . _</div>
+      </div>
+      <div class="price-range-label" style="min-width:48px; text-align:center;">۱−۳</div>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-left">
+        <div class="price-badge">پرفروش ⭐</div>
+        <span class="price-amount">۱۵۰,۰۰۰</span>
+        <span class="price-unit">تومان</span>
+      </div>
+      <div class="price-right">
+        <div class="price-title">۴ تا ۶ حرف</div>
+        <div class="price-morse-dots">_ . . / _ . _ . / . _ . .</div>
+      </div>
+      <div class="price-range-label">۴−۶</div>
+    </div>
+
+    <div class="price-card">
+      <div class="price-left">
+        <span class="price-amount">۲۲۵,۰۰۰</span>
+        <span class="price-unit">تومان</span>
+      </div>
+      <div class="price-right">
+        <div class="price-title">۷ تا ۱۰ حرف</div>
+        <div class="price-morse-dots">. _ / _ . _ / . . . .</div>
+      </div>
+      <div class="price-range-label">۷−۱۰</div>
+    </div>
+
+    <div class="price-card">
+      <div class="price-left">
+        <span class="price-amount">۳۵۰,۰۰۰</span>
+        <span class="price-unit">تومان</span>
+      </div>
+      <div class="price-right">
+        <div class="price-title">بیشتر از ۱۰ حرف</div>
+        <div class="price-morse-dots">جمله یا پیام ویژه</div>
+      </div>
+      <div class="price-range-label">+۱۱</div>
+    </div>
+
+    <!-- EXTRAS -->
+    <div class="extras-title">گزینه‌های اضافه</div>
+    <div class="extras-grid">
+      <div class="extra-item">
+        <span class="extra-icon">🥈</span>
+        <span class="extra-desc">رنگ نقره‌ای</span>
+        <span class="extra-price base">رایگان</span>
+      </div>
+      <div class="extra-item">
+        <span class="extra-icon">🥇</span>
+        <span class="extra-desc">رنگ طلایی</span>
+        <span class="extra-price gold">+ ۱۵,۰۰۰ تومان</span>
+      </div>
+      <div class="extra-item">
+        <span class="extra-icon">⚫</span>
+        <span class="extra-desc">رنگ مشکی</span>
+        <span class="extra-price gold">+ ۵,۰۰۰ تومان</span>
+      </div>
+      <div class="extra-item">
+        <span class="extra-icon">📦</span>
+        <span class="extra-desc">هزینه ارسال</span>
+        <span class="extra-price ship">پس‌کرایه</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COLOR OPTIONS -->
+<div class="colors-section">
+  <div class="section-title">انتخاب رنگ دستبند</div>
+  <div class="section-line"></div>
+
+  <div class="color-cards">
+    <div class="color-card">
+      <div class="color-swatch silver-swatch"></div>
+      <div class="color-name">نقره‌ای</div>
+      <div class="color-price base">قیمت پایه</div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch black-swatch"></div>
+      <div class="color-name">مشکی</div>
+      <div class="color-price inc">+ ۵,۰۰۰ تومان</div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch gold-swatch"></div>
+      <div class="color-name">طلایی</div>
+      <div class="color-price inc">+ ۱۵,۰۰۰ تومان</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW TO ORDER -->
+<div class="steps-section">
+  <div class="steps-inner">
+    <div class="section-title">مراحل ثبت سفارش</div>
+    <div class="section-line"></div>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">پیام در دایرکت اینستاگرام</div>
+          <div class="step-desc">به پیج اینستاگرام <strong style="color:var(--gold)">@morsarad.shop</strong> مراجعه کن و در دایرکت پیام بده که می‌خوای سفارش بدی.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">انتخاب متن و رنگ</div>
+          <div class="step-desc">متن یا کلمه‌ای که می‌خوای روی دستبند باشه رو بفرست. رنگ دستبند (مشکی، نقره‌ای یا طلایی) رو هم انتخاب کن.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">تأیید طرح و قیمت نهایی</div>
+          <div class="step-desc">طرح کد مورس دستبندت برات فرستاده می‌شه تا تأیید کنی. قیمت نهایی هم بر اساس تعداد حروف و رنگ محاسبه می‌شه.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">پرداخت و ارسال</div>
+          <div class="step-desc">بعد از تأیید، مبلغ سفارش رو واریز می‌کنی. دستبند دست‌ساز تو ساخته می‌شه و با پست پس‌کرایه ارسال می‌شه.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div class="step-title">دریافت دستبند اختصاصی</div>
+          <div class="step-desc">دستبند منحصربه‌فردت با کد مورس پیامت آماده‌ست. ما دستبند منحصربه‌فردت رو می‌سازیم 🖤</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section">
+  <div class="section-title">نمونه کارها</div>
+  <div class="section-line"></div>
+
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Slot 1: upload -->
+    <div class="gallery-item" id="uploadSlot">
+      <label class="upload-label" for="gallery-upload">
+        <div class="upload-icon">✦</div>
+        <div class="upload-text">افزودن عکس</div>
+      </label>
+      <input type="file" id="gallery-upload" accept="image/*" multiple>
+    </div>
+    <!-- Placeholder slots -->
+    <div class="gallery-item" id="ph1">
+      <div class="gallery-placeholder">
+        <div style="font-family:monospace;font-size:1.2rem;color:var(--gold);opacity:.25;letter-spacing:.2em">·–·· ·–··</div>
+        <div style="font-size:.7rem;color:var(--silver);opacity:.3;font-family:'Cinzel',serif;letter-spacing:.15em">SAMPLE</div>
+      </div>
+    </div>
+    <div class="gallery-item" id="ph2">
+      <div class="gallery-placeholder">
+        <div style="font-family:monospace;font-size:1.2rem;color:var(--gold);opacity:.25;letter-spacing:.2em">–·– ·–</div>
+        <div style="font-size:.7rem;color:var(--silver);opacity:.3;font-family:'Cinzel',serif;letter-spacing:.15em">HANDMADE</div>
+      </div>
+    </div>
+    <div class="gallery-item" id="ph3">
+      <div class="gallery-placeholder">
+        <div style="font-family:monospace;font-size:1.2rem;color:var(--gold);opacity:.25;letter-spacing:.2em">·–– ·–··</div>
+        <div style="font-size:.7rem;color:var(--silver);opacity:.3;font-family:'Cinzel',serif;letter-spacing:.15em">UNIQUE</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">MORSARA</div>
+  <div class="footer-handle">@morsarad.shop</div>
+  <div style="font-family:monospace;font-size:.8rem;color:var(--gold-dark);opacity:.4;letter-spacing:.15em;margin-bottom:20px;direction:ltr">
+    -- --- .-. ... .- .-. .-
+  </div>
+  <div class="footer-copy">MORSE CODE BRACELET · HANDMADE · ©2026</div>
+</footer>
+
+<!-- STICKY ORDER -->
+<div class="sticky-order">
+  <a href="https://ig.me/m/morsarad.shop" target="_blank">
+    <span class="insta-icon">📩</span>
+    همین الان سفارش بده
+  </a>
+</div>
+
+<script>
+// ── MORSE CODE MAP ──
+const MORSE = {
+  'A':'.-','B':'-...','C':'-.-.','D':'-..','E':'.','F':'..-.','G':'--.','H':'....','I':'..','J':'.---',
+  'K':'-.-','L':'.-..','M':'--','N':'-.','O':'---','P':'.--.','Q':'--.-','R':'.-.','S':'...','T':'-',
+  'U':'..-','V':'...-','W':'.--','X':'-..-','Y':'-.--','Z':'--..',
+  '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.',
+  '.':'.-.-.-',',':'--..--','?':'..--..','!':'-.-.--','/':'-..-.','@':'.--.-.','&':'.-...',
+  // Persian/Arabic basic transliteration
+  'ا':'.-','ب':'-...','پ':'.--.','ت':'-','ث':'...','ج':'.---','چ':'-.-.','ح':'....','خ':'-..-',
+  'د':'-..','ذ':'--.','ر':'.-.','ز':'--..','ژ':'--.-','س':'...','ش':'---','ص':'...-','ض':'-..',
+  'ط':'-','ظ':'-.--','ع':'.-','غ':'--.','ف':'..-.','ق':'--.-','ک':'-.-','گ':'--.','ل','م':'--',
+  'ن':'-.','و':'.--','ه':'....','ی':'..','ک':'-.-','ل':'.-..',
+};
+
+const input = document.getElementById('textInput');
+const output = document.getElementById('morseOutput');
+
+input.addEventListener('input', () => {
+  const text = input.value.toUpperCase();
+  if (!text.trim()) { output.textContent = '· · · · · · · · · ·'; return; }
+
+  const words = text.split(' ');
+  const morse = words.map(word =>
+    word.split('').map(c => MORSE[c] || (c === ' ' ? '/' : '')).filter(Boolean).join(' ')
+  ).join(' / ');
+
+  output.textContent = morse || '· · ·';
+});
+
+// ── GALLERY UPLOAD ──
+document.getElementById('gallery-upload').addEventListener('change', function(e) {
+  const files = Array.from(e.target.files);
+  const grid = document.getElementById('galleryGrid');
+
+  // Remove placeholder slots
+  ['ph1','ph2','ph3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  });
+
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const div = document.createElement('div');
+      div.className = 'gallery-item';
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.alt = 'نمونه کار مورس آرا';
+      div.appendChild(img);
+      // Insert before upload slot
+      grid.insertBefore(div, document.getElementById('uploadSlot'));
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+// ── LOGO UPLOAD (click logo) ──
+document.getElementById('logoCircle').addEventListener('click', () => {
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = 'image/*';
+  inp.onchange = (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = (ev) => {
+      const img = document.getElementById('logoImg');
+      const ph = document.getElementById('logoPlaceholder');
+      img.src = ev.target.result;
+      img.style.display = 'block';
+      ph.style.display = 'none';
+    };
+    r.readAsDataURL(f);
+  };
+  inp.click();
+});
+</script>
+</body>
+</html>
